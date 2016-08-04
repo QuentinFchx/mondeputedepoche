@@ -1,0 +1,17 @@
+button {
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: inherit;
+    cursor: pointer;
+    transition: transform 100ms;
+    outline: none;
+
+    &.clear {
+        background-color: transparent;
+    }
+
+    &:active {
+        transform: scale3d(.98, .98, 1)
+    }
+}
