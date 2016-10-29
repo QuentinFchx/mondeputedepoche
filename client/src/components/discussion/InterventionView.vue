@@ -3,7 +3,7 @@
         <img :src="intervention.intervenant.image.url" alt="" v-if="!this.fromPov && intervention.intervenant">
         <img src="../../assets/icon.png" v-if="!this.fromPov && !intervention.intervenant">
         <div class="content" :class="{ other: !this.fromPov }">
-            <span v-for="part in filteredInterventions">{{ part.content }}</span>
+            <p v-for="part in filteredInterventions">{{ part.content }}</p>
         </div>
     </div>
 </template>
@@ -45,7 +45,7 @@ export default {
         &.other {
             align-items: flex-end;
 
-            > span {
+            > p {
                 background-color: $grey;
 
                 &:first-child {
@@ -55,7 +55,7 @@ export default {
         }
 
         &:not(.other) {
-            > span {
+            > p {
                 background-color: $blue;
                 color: white;
 
@@ -65,8 +65,9 @@ export default {
             }
         }
 
-        > span {
+        > p {
             max-width: 80%;
+            margin-top: 0;
             margin-bottom: 2px;
             padding: 8px;
             $radius: 10px;

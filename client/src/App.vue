@@ -26,11 +26,14 @@ export default {
     body {
         font-family: 'Open Sans', serif;
         font-size: 100%;
-        line-height: 1.2em;
     }
 
     * {
         box-sizing: border-box;
+    }
+
+    p {
+        line-height: 1.2em;
     }
 
     .material-icons {
