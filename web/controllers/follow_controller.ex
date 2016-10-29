@@ -7,24 +7,28 @@ defmodule An.FollowController do
 
   def follow(conn, %{"id" => id}) do
     depute = Repo.get(Depute, id)
+
     Map.get(conn.assigns, :citoyen)
     |> FollowService.follow(depute)
 
-    json(conn, %{})
+    send_resp(conn, 200, "ok")
   end
 
   def followed(conn, _params) do
     deputes =
-    Map.get(conn.assigns, :citoyen)
-    |> Repo.preload(:followed)
-    |> Map.get(:followed)
+      Map.get(conn.assigns, :citoyen)
+      |> Repo.preload(:followed)
+      |> Map.get(:followed)
 
     render(conn, An.DeputeView, "index.json", deputes: deputes)
   end
 
   def unfollow(conn, %{"id" => id}) do
     depute = Repo.get(Depute, id)
+
     Map.get(conn.assigns, :citoyen)
     |> FollowService.unfollow(depute)
+
+    send_resp(conn, 200, "ok")
   end
 end

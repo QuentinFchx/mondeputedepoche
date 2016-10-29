@@ -36,7 +36,7 @@
                 this.$store.commit('SET_SEARCH', e.target.value);
             },
             follow(deputeId){
-                this.$store.dispatch(this.$store.state.auth.token ? 'FOLLOW' : 'AUTH', deputeId).then(()=>{
+                this.$store.dispatch(this.$store.state.auth.token ? 'FOLLOW_DEPUTE' : 'AUTH', deputeId).then(()=>{
                     this.$router.replace('feed')
                 });
             }

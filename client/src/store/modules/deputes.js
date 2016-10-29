@@ -19,13 +19,24 @@ const actions = {
     FETCH_FOLLOWED: ({commit})=>{
         return Vue.http.get("/api/followed")
         .then(res => res.json())
-        .then(res => commit("SET_FOLLOWED", [res.data]))
+        .then(res => commit("SET_FOLLOWED", res.data))
     },
-    FOLLOW: ({commit}, deputeId)=>{
+    FOLLOW_DEPUTE: ({commit, dispatch}, deputeId)=>{
         return Vue.http.post(`/api/follow/${deputeId}`)
+        .then(()=>{
+            dispatch('FETCH_FOLLOWED')
+        })
     },
-    UNFOLLOW: ({commit}, deputeId)=>{
-        return Vue.http.post(`api/unfollow/${deputeId}`)
+    UNFOLLOW_DEPUTE: ({commit, dispatch}, deputeId)=>{
+        return Vue.http.post(`/api/unfollow/${deputeId}`)
+        .then(()=>{
+            dispatch('FETCH_FOLLOWED')
+        })
+    },
+    FETCH_DEPUTE: ({commit}, query)=>{
+        return Vue.http.get(`/api/deputes/${query.actorId}`)
+        .then(res => res.json())
+        .then(res => res.data)
     }
 }
 

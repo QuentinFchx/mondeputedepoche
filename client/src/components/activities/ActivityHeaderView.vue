@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="header">
         <img :src="activity.actor.image.url" :alt="activity.actor.displayName" />
-        <span>{{ activity.actor.displayName }}</span>
+        <router-link :to="deputeUri" class="actor">{{ activity.actor.displayName }}</router-link>
         <router-link :to="activityUri">{{ activity.published | date('ll') }}</router-link>
     </div>
 </template>
@@ -12,6 +12,9 @@ export default {
     computed: {
         activityUri: function(){
             return `/activity/${this.activity.actor.id}/${this.activity.object.id}`
+        },
+        deputeUri: function(){
+            return `/depute/${this.activity.actor.id}`
         }
     }
 }
@@ -33,7 +36,7 @@ export default {
         object-fit: cover;
     }
 
-    span {
+    .actor {
         flex: 2;
     }
 </style>
