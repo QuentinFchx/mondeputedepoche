@@ -1,10 +1,12 @@
 <template lang="html">
-    <header class="header">
-        <router-link to="/feed">Assemblée Nationale</router-link>
-
+    <header>
         <div>
-            <button v-on:click="logout()"><span class="material-icons">exit_to_app</span></button>
-            <router-link to="/search"><span class="material-icons">search</span></router-link>
+            <router-link to="/feed">Assemblée Nationale</router-link>
+
+            <div>
+                <button v-on:click="logout()"><span class="material-icons">exit_to_app</span></button>
+                <router-link to="/search"><span class="material-icons">search</span></router-link>
+            </div>
         </div>
     </header>
 </template>
@@ -23,15 +25,11 @@ export default {
 <style lang="scss" scoped>
     @import '../styles/vars';
 
-    .header {
-        display: flex;
+    header {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        padding: 5px;
-        justify-content: space-between;
-        align-items: center;
         border-bottom: 1px solid $blue2;
         color: $white;
         z-index: 1;
@@ -46,6 +44,13 @@ export default {
             background: $glowy-bg;
             opacity: .98;
             z-index: -1;
+        }
+
+        > div {
+            display: flex;
+            padding: 5px;
+            justify-content: space-between;
+            align-items: center;
         }
 
         @supports (backdrop-filter: blur(2px)) {
