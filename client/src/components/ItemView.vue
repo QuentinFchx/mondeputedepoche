@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="list-item">
+    <div class="list__item">
         <slot name="picture"></slot>
         <slot name="line"></slot>
         <slot></slot>

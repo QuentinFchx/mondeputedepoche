@@ -9,10 +9,10 @@
             </form>
         </div>
         <div>
-            <ul>
+            <ul class="list">
                 <li v-for="depute in $store.state.searchResults">
                     <item-view>
-                        <img slot="picture" :src="depute.image.url" :alt="depute.displayName" />
+                        <img slot="picture" :src="depute.image.url" :alt="depute.displayName" class="list__item-avatar">
                         <span slot="line">{{depute.displayName}}</span>
                         <button v-on:click="follow(depute.id)">Follow</button>
                     </item-view>

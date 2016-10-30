@@ -22,6 +22,7 @@ export default {
     @import 'styles/vars';
     @import 'styles/atoms/anchors';
     @import 'styles/atoms/buttons';
+    @import 'styles/atoms/list';
 
     body {
         font-family: 'Open Sans', serif;

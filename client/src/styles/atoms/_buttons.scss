@@ -6,6 +6,7 @@ button {
     cursor: pointer;
     transition: transform 100ms;
     outline: none;
+    text-transform: uppercase;
 
     &.clear {
         background-color: transparent;
