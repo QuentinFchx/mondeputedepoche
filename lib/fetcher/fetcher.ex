@@ -16,6 +16,7 @@ defmodule An.Fetcher do
 
   def fetch_all do
     [
+      DeputesSenateursMinistresLoader,
       QuestionsGvtLoader,
       QuestionsOralesLoader,
       ScrutinsLoader

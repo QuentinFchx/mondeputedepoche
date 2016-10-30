@@ -17,7 +17,7 @@ defmodule An.FetcherJob do
 
   def handle_info(:work, state) do
     Logger.info("[Fetcher Job] start")
-    # Fetcher.fetch_all
+    Fetcher.fetch_all
     schedule_work()
     {:noreply, state}
   end
