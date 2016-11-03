@@ -10,13 +10,14 @@
                     <activity-view :activity="activity"></activity-view>
                 </li>
             </ol>
-            <button v-on:click="loadMore()">Load More</button>
+            <infinite-loading :on-infinite="loadMore" ref="infiniteLoading"></infinite-loading>
         </div>
     </div>
 </template>
 
 <script>
     import ActivityView from '../components/ActivityView.vue'
+    import InfiniteLoading from 'vue-infinite-loading';
     import moment from 'moment'
 
     export default {
@@ -28,14 +29,14 @@
             loadMore(){
                 const lastActivity = this.$store.getters.lastActivity
                 const before = moment((lastActivity || {}).published).format('YYYY-MM-DD')
-                this.$store.dispatch('GET_FEED', {before});
+                this.$store.dispatch('GET_FEED', {before}).then(activities =>{
+                    const complete = !activities.length
+                    this.$refs.infiniteLoading.$emit(complete ? '$InfiniteLoading:complete' : '$InfiniteLoading:loaded');
+                });
             }
         },
-        created(){
-            if(this.$store.state.feed.activities.length === 0) this.loadMore();
-        },
         components: {
-            ActivityView
+            ActivityView, InfiniteLoading
         }
     };
 </script>

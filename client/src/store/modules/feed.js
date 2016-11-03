@@ -17,7 +17,10 @@ const actions = {
     GET_FEED: ({commit}, params)=>{
         return Vue.http.get("/api/feed", {params})
         .then(res => res.json())
-        .then(res => commit("ADD_ACTIVITIES", res.data))
+        .then(({data}) => {
+            commit("ADD_ACTIVITIES", data)
+            return data
+        })
     },
     RESET_FEED: ({commit})=>{
         commit("SET_ACTIVITIES", [])
