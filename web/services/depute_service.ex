@@ -1,4 +1,6 @@
 defmodule An.DeputeService do
+  import Ecto.Query
+
   alias An.Commune
   alias An.Depute
   alias An.Mandat
@@ -13,7 +15,7 @@ defmodule An.DeputeService do
       |> Repo.one!
 
     mandat = Mandat
-    |> Mandat.in_organe(Organe.current_assemblee)
+    |> Mandat.in_organe(An.OrganeService.current_assemblee)
     |> Mandat.filter_parlementaires
     |> Mandat.filter_circonscription(commune.numero_departement, commune.numero_circonscription)
     |> Repo.one!
@@ -25,7 +27,14 @@ defmodule An.DeputeService do
   @spec get_parpol_of_depute(Depute) :: Organe
   def get_parpol_of_depute(depute) do
     Ecto.assoc(depute, :organes)
-    |> Organe.filter_parpol
+    |> where([o], o.code_type == ^"PARPOL")
+    |> Repo.one!
+  end
+
+  @spec get_gp_of_depute(Depute) :: Organe
+  def get_gp_of_depute(depute) do
+    Ecto.assoc(depute, :organes)
+    |> where([o], o.code_type == ^"GP")
     |> Repo.one!
   end
 

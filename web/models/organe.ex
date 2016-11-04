@@ -17,11 +17,11 @@ defmodule An.Organe do
     "DELEG": "",
     "DELEGBUREAU": "",
     "DELEGSENAT": "",
-    "GA": "Groupe d'Amitié",
+    "GA": "Groupe d'amitié",
     "GE": "Groupe d'études",
     "GEVI": "",
     "GOUVERNEMENT": "",
-    "GP": "",
+    "GP": "Groupe parlementaire",
     "GROUPESENAT": "",
     "MINISTERE": "",
     "MISINFO": "",
@@ -30,7 +30,7 @@ defmodule An.Organe do
     "OFFPAR": "",
     "ORGAINT": "",
     "ORGEXTPARL": "",
-    "PARPOL": "Parti Politique",
+    "PARPOL": "Parti politique",
     "PRESREP": "",
     "SENAT": ""
   }
@@ -55,17 +55,5 @@ defmodule An.Organe do
     struct
     |> cast(params, [:type, :code_type, :libelle])
     |> validate_required([:type, :code_type, :libelle])
-  end
-
-  def current_assemblee do
-    An.Organe
-    |> where([o], o.code_type == "ASSEMBLEE")
-    |> last
-    |> An.Repo.one
-  end
-
-  def filter_parpol(query) do
-    from o in query,
-      where: o.code_type == "PARPOL"
   end
 end

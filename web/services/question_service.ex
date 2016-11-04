@@ -100,7 +100,7 @@ defmodule An.QuestionService do
       |> String.trim
 
     case name do
-      "le président" -> Depute.president_of_assemblee(An.Organe.current_assemblee)
+      "le président" -> Depute.president_of_assemblee(An.OrganeService.current_assemblee)
       _ -> Depute |> Depute.find_by_name(name) |> Repo.one
     end
   end
