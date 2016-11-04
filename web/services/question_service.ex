@@ -98,6 +98,7 @@ defmodule An.QuestionService do
       |> Regex.named_captures(intervenant)
       |> Map.get("name")
       |> String.trim
+      |> String.replace(<<0x00A0 :: utf8>>, " ")
 
     case name do
       "le président" -> Depute.president_of_assemblee(An.OrganeService.current_assemblee)
