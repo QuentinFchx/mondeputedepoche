@@ -69,7 +69,13 @@ export default {
     }
 
     .nonVotant {
-        background-color: $grey;
+        background-color: $light-gray;
+    }
+
+    .abstention {
+        &.vote-color {
+            border: 1px solid $gray;
+        }
     }
 
     .summary {
@@ -86,7 +92,8 @@ export default {
             width: 1%;
             text-align: center;
             vertical-align: middle;
-            font-size: 3vw;
+            font-size: .7em;
+            white-space: nowrap;
         }
     }
 

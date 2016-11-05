@@ -46,7 +46,7 @@ export default {
             align-items: flex-end;
 
             > p {
-                background-color: $grey;
+                background-color: $light-gray;
 
                 &:first-child {
                     border-top-right-radius: 0;
