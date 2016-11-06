@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-on:click="showStats = !showStats">
         <div class="summary switcher" :class="{ switched: showStats }">
             <div class="switcher-wrapper">
                 <ol>
@@ -15,7 +15,7 @@
                 </ol>
             </div>
         </div>
-        <div class="graph" v-on:click="showStats = !showStats">
+        <div class="graph">
             <div v-for="votes in orderedRepartition" :style="votes.style" :class="[votes.type]" :aria-label="votes.type">
                 {{ votes.type }}
             </div>
