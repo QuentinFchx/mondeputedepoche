@@ -1,8 +1,12 @@
 <template lang="html">
-    <div class="list__item">
-        <slot name="picture"></slot>
-        <slot name="line"></slot>
-        <slot></slot>
+    <div class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+            <slot name="picture"></slot>
+            <slot name="line"></slot>
+        </span>
+        <span class="mdl-list__item-secondary-content">
+            <slot></slot>
+        </span>
     </div>
 </template>
 

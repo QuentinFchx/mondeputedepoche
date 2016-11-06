@@ -1,9 +1,11 @@
 <template>
-    <div>
+    <div class="mdl-layout">
         <app-header></app-header>
-        <div class="page-container">
-            <router-view></router-view>
-        </div>
+        <main class="mdl-layout__content">
+            <div class="page-content">
+                <router-view></router-view>
+            </div>
+        </main>
     </div>
 </template>
 
@@ -19,10 +21,9 @@ export default {
 
 <style lang="scss">
     @import '~normalize.css';
+    @import '~material-design-lite/material.min.css';
     @import 'styles/vars';
     @import 'styles/atoms/anchors';
-    @import 'styles/atoms/buttons';
-    @import 'styles/atoms/list';
 
     body {
         font-family: 'Open Sans', serif;
@@ -43,8 +44,8 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-    .page-container {
-        margin: 50px auto 0;
+    .page-content {
+        margin: 70px auto 0;
         max-width: 700px;
     }
 </style>

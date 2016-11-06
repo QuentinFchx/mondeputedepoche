@@ -1,12 +1,12 @@
 <template lang="html">
-    <header>
-        <div>
-            <router-link to="/feed">Assemblée Nationale</router-link>
-
-            <div>
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <span class="mdl-layout-title"><router-link to="/feed">Assemblée Nationale</router-link></span>
+            <div class="mdl-layout-spacer"></div>
+            <nav class="mdl-navigation">
                 <button v-on:click="logout()"><span class="material-icons">exit_to_app</span></button>
                 <router-link to="/search"><span class="material-icons">search</span></router-link>
-            </div>
+            </nav>
         </div>
     </header>
 </template>
@@ -25,14 +25,9 @@ export default {
 <style lang="scss" scoped>
     @import '../styles/vars';
 
-    header {
+    .mdl-layout__header {
+        display: block;
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        border-bottom: 1px solid $blue2;
-        color: $white;
-        z-index: 1;
 
         &:before {
             position: absolute;
@@ -44,13 +39,6 @@ export default {
             background: $glowy-bg;
             opacity: .98;
             z-index: -1;
-        }
-
-        > div {
-            display: flex;
-            padding: 5px;
-            justify-content: space-between;
-            align-items: center;
         }
 
         @supports (backdrop-filter: blur(2px)) {

@@ -2,19 +2,21 @@
     <div>
         <div>
             <form @submit="search($event)">
-                <input type="search" name="search" placeholder="CP ou nom" autofocus="true"
-                    :value="$store.state.searchQuery"
-                    @input="setSearch">
-                <button>Search</button>
+                <div class="mdl-textfield mdl-shadow--2dp">
+                    <input type="search" name="search" placeholder="Code postal / Nom" autofocus="true"
+                        class="mdl-textfield__input"
+                        :value="$store.state.searchQuery"
+                        @input="setSearch">
+                </div>
             </form>
         </div>
         <div>
-            <ul class="list">
+            <ul class="mdl-list">
                 <li v-for="depute in $store.state.searchResults">
                     <item-view>
-                        <img slot="picture" :src="depute.image.url" :alt="depute.displayName" class="list__item-avatar">
+                        <img slot="picture" :src="depute.image.url" :alt="depute.displayName" class="mdl-list__item-avatar">
                         <span slot="line">{{depute.displayName}}</span>
-                        <button v-on:click="follow(depute.id)">Follow</button>
+                        <button class="mdl-button" v-on:click="follow(depute.id)">Follow</button>
                     </item-view>
                 </li>
             </ul>
@@ -50,3 +52,10 @@
         }
     };
 </script>
+
+<style lang="scss" scoped>
+    .mdl-textfield {
+        width: 100%;
+        padding: 10px;
+    }
+</style>
