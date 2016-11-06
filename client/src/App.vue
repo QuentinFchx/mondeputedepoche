@@ -26,7 +26,7 @@ export default {
     @import 'styles/atoms/anchors';
 
     body {
-        font-family: 'Open Sans', serif;
+        font-family: 'Roboto', serif;
         font-size: 100%;
     }
 
