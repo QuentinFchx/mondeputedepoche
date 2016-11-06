@@ -48,4 +48,8 @@ export default {
         margin: 70px auto 0;
         max-width: 700px;
     }
+
+    [class^="mdl-layout"] {
+        overflow: initial;
+    }
 </style>
