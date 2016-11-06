@@ -35,9 +35,6 @@ const actions = {
 const getters = {
     lastActivity(state){
         return state.activities[state.activities.length - 1]
-    },
-    lastActivityPublication(state, getters){
-        return (getters.lastActivity || {}).published
     }
 }
 

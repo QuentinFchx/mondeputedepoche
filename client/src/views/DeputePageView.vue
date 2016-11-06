@@ -35,9 +35,15 @@ export default {
         },
         follow(){
             this.$store.dispatch('FOLLOW_DEPUTE', this.depute.id)
+            .then(()=>{
+                this.$store.dispatch('RESET_FEED')
+            })
         },
         unfollow(){
             this.$store.dispatch('UNFOLLOW_DEPUTE', this.depute.id)
+            .then(()=>{
+                this.$store.dispatch('RESET_FEED')
+            })
         }
     }
 }
