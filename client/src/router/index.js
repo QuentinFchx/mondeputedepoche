@@ -4,7 +4,7 @@ import store from '../store'
 
 Vue.use(Router)
 
-import SearchCircoView from '../views/SearchCircoView.vue'
+import SearchView from '../views/SearchView.vue'
 import FeedView from '../views/FeedView.vue'
 import StandaloneActivityView from '../views/StandaloneActivityView.vue'
 import DeputePageView from '../views/DeputePageView.vue'
@@ -13,7 +13,7 @@ const router = new Router({
     mode: 'history',
     base: '/an',
     routes: [
-        {path: '/search', component: SearchCircoView},
+        {path: '/search', component: SearchView},
         {path: '/feed', component: FeedView, beforeEnter: function(to, from, next){
             next(store.state.auth.token ? undefined : '/search')
         }},

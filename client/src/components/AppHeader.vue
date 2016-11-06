@@ -4,8 +4,8 @@
             <span class="mdl-layout-title"><router-link to="/feed">Assemblée Nationale</router-link></span>
             <div class="mdl-layout-spacer"></div>
             <nav class="mdl-navigation">
-                <button v-on:click="logout()"><span class="material-icons">exit_to_app</span></button>
-                <router-link to="/search"><span class="material-icons">search</span></router-link>
+                <button class="mdl-button mdl-button--icon" v-on:click="logout()"><span class="material-icons">exit_to_app</span></button>
+                <router-link class="mdl-navigation__link" to="/search"><span class="material-icons">search</span></router-link>
             </nav>
         </div>
     </header>
@@ -28,6 +28,7 @@ export default {
     .mdl-layout__header {
         display: block;
         position: fixed;
+        background: transparent;
 
         &:before {
             position: absolute;
