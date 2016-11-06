@@ -1,7 +1,7 @@
 <template lang="html">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
-            <span class="mdl-layout-title"><router-link to="/feed">Assemblée Nationale</router-link></span>
+            <span class="mdl-layout-title"><router-link to="/feed">Mon député de poche</router-link></span>
             <div class="mdl-layout-spacer"></div>
             <nav class="mdl-navigation">
                 <button class="mdl-button mdl-button--icon" v-on:click="logout()"><span class="material-icons">exit_to_app</span></button>
@@ -48,6 +48,10 @@ export default {
             &:before {
                 opacity: .94 !important;
             }
+        }
+
+        .mdl-layout__header-row {
+            padding-left: 16px;
         }
     }
 </style>
