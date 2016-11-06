@@ -2,7 +2,7 @@
     <div>
         <div>
             <h1>Dernières actualités</h1>
-            <button v-on:click="refresh()">Refresh</button>
+            <button class="mdl-button" v-on:click="refresh()">Refresh</button>
         </div>
         <div>
             <ol class="feed">

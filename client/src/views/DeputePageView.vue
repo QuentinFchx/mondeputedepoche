@@ -4,8 +4,8 @@
             <h1>{{ depute.displayName }}</h1>
             <img :src="depute.image.url" :alt="depute.displayName">
 
-            <button @click="follow()" v-if="!isFollowed">Follow</button>
-            <button @click="unfollow()" v-if="isFollowed">Unfollow</button>
+            <button class="mdl-button" @click="follow()" v-if="!isFollowed">Follow</button>
+            <button class="mdl-button" @click="unfollow()" v-if="isFollowed">Unfollow</button>
         </div>
     </div>
 </template>
