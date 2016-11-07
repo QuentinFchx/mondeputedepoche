@@ -41,7 +41,7 @@ defmodule An.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:poison, "~> 2.0"},
-     {:httpoison, "~> 0.9.0"},
+     {:httpoison, "~> 0.10.0"},
      {:redix, "~> 0.4.0"},
      {:timex, "~> 3.0"},
      {:csv, "~> 1.4.2"},
