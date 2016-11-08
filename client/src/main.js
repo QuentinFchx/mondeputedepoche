@@ -10,6 +10,10 @@ sync(store, router)
 import dateFilter from './filters/dateFilter'
 Vue.filter('date', dateFilter)
 
+import VueMdl from 'vue-mdl'
+import 'material-design-lite'
+Vue.use(VueMdl)
+
 const app = new Vue({
     router,
     store,

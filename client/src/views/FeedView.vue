@@ -10,7 +10,9 @@
                     <activity-view :activity="activity"></activity-view>
                 </li>
             </ol>
-            <infinite-loading :on-infinite="loadMore" ref="infiniteLoading"></infinite-loading>
+            <infinite-loading :on-infinite="loadMore" ref="infiniteLoading">
+                <mdl-spinner slot="spinner"></mdl-spinner>
+            </infinite-loading>
         </div>
     </div>
 </template>
@@ -24,7 +26,7 @@
         methods: {
             refresh(){
                 this.$store.dispatch('RESET_FEED')
-                this.loadMore()
+                this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
             },
             loadMore(){
                 const lastActivity = this.$store.getters.lastActivity
