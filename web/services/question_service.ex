@@ -101,7 +101,7 @@ defmodule An.QuestionService do
       |> String.replace(<<0x00A0 :: utf8>>, " ")
 
     case name do
-      "le président" -> Depute.president_of_assemblee(An.OrganeService.current_assemblee)
+      "le président" -> An.DeputeService.get_president_of_assemblee(An.OrganeService.current_assemblee)
       _ -> Depute |> Depute.find_by_name(name) |> Repo.one
     end
   end

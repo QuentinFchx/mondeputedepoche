@@ -17,7 +17,7 @@ defmodule An.DeputeController do
     deputes =
       case Integer.parse(query) do
         {code_postal, _} -> [An.DeputeService.get_depute_of_commune(code_postal)]
-        :error -> Depute.search(Depute, query) |> Repo.all
+        :error -> An.DeputeService.search(query)
       end
 
     render(conn, "index.json", deputes: deputes)

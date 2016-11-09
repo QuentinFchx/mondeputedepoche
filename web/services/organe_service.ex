@@ -5,6 +5,7 @@ defmodule An.OrganeService do
   alias An.Repo
 
   def current_assemblee do
+    # FIXME: use viMoDe.dateFin in raw_json
     Organe
     |> where([o], o.code_type == "ASSEMBLEE")
     |> last

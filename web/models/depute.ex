@@ -35,18 +35,4 @@ defmodule An.Depute do
     from d in query,
       where: fragment("(prenom || ' ' || nom) = ?", ^name)
   end
-
-  def search(query, search) do
-    from d in query,
-      where: fragment("(prenom || ' ' || nom) ILIKE ?", ^"%#{search}%")
-  end
-
-  def president_of_assemblee(assemblee) do
-    query = from d in __MODULE__,
-      join: m in assoc(d, :mandats),
-      where: fragment("? #>> ? = ?", m.raw_json, "{infosQualite, libQualite}", "Président de l'Assemblée nationale")
-        and m.organe_uid == ^assemblee.uid
-
-    An.Repo.one!(query)
-  end
 end

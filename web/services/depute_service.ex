@@ -26,16 +26,29 @@ defmodule An.DeputeService do
 
   @spec get_parpol_of_depute(Depute) :: Organe
   def get_parpol_of_depute(depute) do
-    Ecto.assoc(depute, :organes)
-    |> where([o], o.code_type == ^"PARPOL")
-    |> Repo.one!
+    query =
+      from o in Organe,
+        join: m in Mandat,
+        on: m.depute_uid == ^depute.uid and is_nil(m.date_fin),
+        where: o.uid == m.organe_uid,
+        where: o.code_type == ^"PARPOL",
+        distinct: true
+
+    Repo.one(query)
   end
 
   @spec get_gp_of_depute(Depute) :: Organe
   def get_gp_of_depute(depute) do
-    Ecto.assoc(depute, :organes)
-    |> where([o], o.code_type == ^"GP")
-    |> Repo.one!
+    query =
+      from o in Organe,
+        join: m in Mandat,
+        on: m.depute_uid == ^depute.uid and is_nil(m.date_fin),
+        where: o.uid == m.organe_uid,
+        where: o.code_type == ^"GP",
+        distinct: true
+
+    # FIXME: find a way to use Repo.one (fix data)
+    Repo.all(query) |> List.first
   end
 
   @spec get_depute_picture(Depute) :: String.t
@@ -44,8 +57,21 @@ defmodule An.DeputeService do
     "http://www2.assemblee-nationale.fr/static/tribun/14/photos/#{picture_id}.jpg"
   end
 
+  @spec get_president_of_assemblee(Organe) :: Depute
   def get_president_of_assemblee(assemblee) do
-    assemblee
-    |> Repo.preload(:mandats)
+    query = from d in Depute,
+      join: m in assoc(d, :mandats),
+      where: fragment("? #>> ? = ?", m.raw_json, "{infosQualite, libQualite}", "Président de l'Assemblée nationale")
+        and m.organe_uid == ^assemblee.uid
+
+    Repo.one!(query)
+  end
+
+  @spec search(String.t) :: List
+  def search(query) do
+    An.OrganeService.current_assemblee
+    |> Ecto.assoc(:deputes)
+    |> where([d], fragment("(? || ' ' || ?) ILIKE ?", d.prenom, d.nom, ^"%#{query}%"))
+    |> Repo.all
   end
 end
