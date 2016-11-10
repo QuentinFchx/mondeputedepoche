@@ -2,7 +2,16 @@
     <div>
         <div v-if="depute">
             <h1>{{ depute.displayName }}</h1>
+
             <img :src="depute.image.url" :alt="depute.displayName">
+
+            <div>
+                <span v-if="depute.partiPolitique">Parti politique: {{ depute.partiPolitique.libelle }}</span>
+                <br>
+                <span v-if="depute.groupePolitique">Groupe politique: {{ depute.groupePolitique.libelle }}</span>
+                <br>
+                Date naissance: {{ depute.dateNaissance | date('L') }}
+            </div>
 
             <button class="mdl-button" @click="follow()" v-if="!isFollowed">Follow</button>
             <button class="mdl-button" @click="unfollow()" v-if="isFollowed">Unfollow</button>
