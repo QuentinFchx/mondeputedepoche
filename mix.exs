@@ -48,7 +48,6 @@ defmodule An.Mixfile do
      {:floki, "~> 0.11.0"},
      {:joken, "~> 1.3"},
      {:corsica, "~> 0.4"},
-     {:exrm, "~> 1.0.8"},
      {:sentry, "~> 1.0"},
      {:dialyxir, "~> 0.4.0", only: [:dev]},
      {:credo, "~> 0.4", only: [:dev, :test]}]
