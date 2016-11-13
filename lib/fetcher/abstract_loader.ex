@@ -21,9 +21,9 @@ defmodule An.Fetcher.AbstractLoader do
     Poison.Parser.parse!(content)
   end
 
-  def parse_date(date_string) do
+  def parse_date(date_string, format \\ "{YYYY}-{0M}-{0D}") do
     date_string
-    |> Timex.parse!("{YYYY}-{0M}-{0D}")
+    |> Timex.parse!(format)
     |> Timex.to_erl
     |> Ecto.DateTime.from_erl
   end

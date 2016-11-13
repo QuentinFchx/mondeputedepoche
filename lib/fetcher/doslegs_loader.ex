@@ -21,47 +21,81 @@ defmodule An.Fetcher.DoslegsLoader do
     export_data
     |> Map.get("dossiersLegislatifs")
     |> Map.get("dossier")
-    |> Enum.take(5)
     |> Enum.each(fn(dossier) -> handle_dossier(dossier) end)
 
-    export_data
-    |> Map.get("textesLegislatifs")
-    |> Map.get("document")
-    |> Enum.take(5)
-    |> Enum.each(fn(document) -> handle_document(document) end)
+    # export_data
+    # |> Map.get("textesLegislatifs")
+    # |> Map.get("document")
+    # |> Enum.take(5)
+    # |> Enum.each(fn(document) -> handle_document(document) end)
   end
 
   def handle_dossier(dossier_data) do
     dossier_data = dossier_data |> Map.get("dossierParlementaire")
-    %DosLeg{
-      uid: dossier_data |> Map.get("uid"),
-      raw_json: dossier_data
-    }
-    |> Repo.insert!
+    dossier = dossier_from_data(dossier_data)
 
-    handle_acte_leg(dossier_data)
+    dossier = case Repo.get_by(DosLeg, uid: dossier.uid) do
+      nil  -> dossier
+      dossier -> dossier
+    end
+    |> DosLeg.changeset
+    |> Repo.insert_or_update!
+
+    handle_actes_leg(dossier_data, %{dossier_uid: dossier.uid})
   end
 
-  def handle_acte_leg(acte_leg_data) do
-    if is_nil(Map.get(acte_leg_data, "titreDossier")) do
-      %ActeLeg{
-        uid: acte_leg_data |> Map.get("uid"),
-        raw_json: acte_leg_data
-      }
-      |> Repo.insert!
-    end
+  defp dossier_from_data(dossier_data) do
+    %DosLeg{
+      uid: dossier_data |> Map.get("uid"),
+      titre: dossier_data |> Map.get("titreDossier") |> Map.get("titre"),
+      raw_json: dossier_data |> Map.delete("actesLegislatifs")
+    }
+  end
 
-    actes_legislatifs = case Map.get(acte_leg_data, "actesLegislatifs") do
+  def handle_actes_leg(acte_leg_data, parent) do
+    acte_leg_data
+    |> Map.get("actesLegislatifs")
+    |> case do
       n when is_nil(n) -> %{acteLegislatif: nil}
       actes -> actes
     end
-
-    case Map.get(actes_legislatifs, "acteLegislatif") do
+    |> Map.get("acteLegislatif")
+    |> case do
       l when is_list(l) -> l
       n when is_nil(n) -> []
       s -> [s]
     end
-    |> Enum.each(fn(acte) -> handle_acte_leg(acte) end)
+    |> Enum.each(fn(acte) -> handle_acte_leg(acte, parent) end)
+  end
+
+  def handle_acte_leg(acte_leg_data, parent) do
+    acte = acte_from_data(acte_leg_data, parent)
+
+    case Repo.get_by(ActeLeg, uid: acte.uid) do
+      nil -> acte
+      acte -> acte
+    end
+    |> ActeLeg.changeset
+    |> Repo.insert_or_update!
+
+    handle_actes_leg(acte_leg_data, %{acte_uid: acte.uid})
+  end
+
+  defp acte_from_data(acte_leg_data, parent) do
+    published_at = case Map.get(acte_leg_data, "dateActe") do
+      nil -> nil
+      date -> An.Fetcher.AbstractLoader.parse_date(date, "{ISO:Extended}")
+    end
+
+    %ActeLeg{
+      uid: acte_leg_data |> Map.get("uid"),
+      code_acte: acte_leg_data |> Map.get("codeActe"),
+      organe_uid: acte_leg_data |> Map.get("organeRef"),
+      dossier_uid: parent |> Map.get(:dossier_uid),
+      acte_uid: parent |> Map.get(:acte_uid),
+      published_at: published_at,
+      raw_json: acte_leg_data |> Map.delete("actesLegislatifs")
+    }
   end
 
   def handle_document(document_data) do

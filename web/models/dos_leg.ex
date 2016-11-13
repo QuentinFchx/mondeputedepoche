@@ -3,6 +3,7 @@ defmodule An.DosLeg do
 
   @primary_key {:uid, :string, []}
   schema "dos_legs" do
+    field :titre, :string
     field :raw_json, :map
 
     timestamps()
@@ -13,7 +14,7 @@ defmodule An.DosLeg do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:raw_json])
+    |> cast(params, [:titre, :raw_json])
     |> validate_required([:raw_json])
   end
 end
