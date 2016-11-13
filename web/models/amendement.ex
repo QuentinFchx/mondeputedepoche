@@ -3,8 +3,11 @@ defmodule An.Amendement do
 
   @primary_key {:uid, :string, []}
   schema "amendements" do
-    belongs_to :depute, An.Depute, foreign_key: :depute_uid, references: :uid, type: :string
+    field :etat, :string
+    field :published_at, :utc_datetime
     field :raw_json, :map
+
+    belongs_to :depute, An.Depute, foreign_key: :depute_uid, references: :uid, type: :string
 
     timestamps()
   end
