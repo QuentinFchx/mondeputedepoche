@@ -22,6 +22,14 @@ const app = new Vue({
 
 app.$mount('#app')
 
-
 import moment from 'moment'
 moment.locale('fr')
+
+import Raven from 'raven-js';
+import RavenVue from 'raven-js/plugins/vue';
+
+if(process.env.NODE_ENV === "production") {
+    Raven.config(process.env.SENTRY_DSN)
+        .addPlugin(RavenVue, Vue)
+        .install();
+}

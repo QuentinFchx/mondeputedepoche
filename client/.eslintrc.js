@@ -8,6 +8,9 @@ module.exports = {
       browser: true
   },
   extends: 'eslint:recommended',
+  globals: {
+      process: true
+  },
   plugins: [
     'html'
   ],

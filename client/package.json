@@ -16,6 +16,7 @@
     "material-design-lite": "^1.2.1",
     "moment": "^2.15.1",
     "normalize.css": "^5.0.0",
+    "raven-js": "^3.8.0",
     "vue": "^2.0.1",
     "vue-infinite-loading": "next",
     "vue-mdl": "^1.0.0-alpha.1",
