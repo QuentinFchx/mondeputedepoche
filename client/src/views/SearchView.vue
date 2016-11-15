@@ -11,6 +11,9 @@
             </form>
         </div>
         <div>
+            <div v-if="searching" style="text-align: center;">
+                <mdl-spinner></mdl-spinner>
+            </div>
             <ul class="mdl-list">
                 <li v-for="depute in $store.state.searchResults">
                     <item-view>
@@ -28,11 +31,19 @@
     import ItemView from '../components/ItemView.vue'
 
     export default {
+        data: ()=>{
+            return {
+                searching: false
+            }
+        },
         methods: {
             search(evt){
                 evt.preventDefault()
                 if(!this.$store.state.searchQuery) return
-                this.$store.dispatch('SEARCH_DEPUTE', this.$store.state.searchQuery);
+                this.searching = true
+                this.$store.commit('SET_SEARCH_RESULTS', [])
+                this.$store.dispatch('SEARCH_DEPUTE', this.$store.state.searchQuery)
+                .then(()=>{ this.searching = false })
             },
             setSearch(e){
                 this.$store.commit('SET_SEARCH', e.target.value);
