@@ -11,7 +11,6 @@ import DeputePageView from '../views/DeputePageView.vue'
 
 const router = new Router({
     mode: 'history',
-    base: '/an',
     routes: [
         {path: '/search', component: SearchView},
         {path: '/feed', component: FeedView, beforeEnter: function(to, from, next){
@@ -19,7 +18,7 @@ const router = new Router({
         }},
         {path: '/depute/:actorId', component: DeputePageView},
         {path: '/activity/:actorId/:objectId', component: StandaloneActivityView},
-        {path: '*', redirect: '/search'}
+        {path: '*', redirect: '/feed'}
     ]
 })
 
