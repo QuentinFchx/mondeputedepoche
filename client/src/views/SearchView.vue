@@ -1,5 +1,11 @@
 <template lang="html">
     <div>
+        <div v-if="!authed">
+            <h1>Bonjour citoyen!</h1>
+            <p>
+                Commence par chercher le député de ta circonscription
+            </p>
+        </div>
         <div>
             <form @submit="search($event)">
                 <div class="mdl-textfield mdl-shadow--2dp">
@@ -19,7 +25,7 @@
                     <item-view>
                         <img slot="picture" :src="depute.image.url" :alt="depute.displayName" class="mdl-list__item-avatar">
                         <span slot="line">{{depute.displayName}}</span>
-                        <button class="mdl-button" v-on:click="follow(depute.id)">Follow</button>
+                        <button class="mdl-button" v-on:click="follow(depute.id)">Suivre</button>
                     </item-view>
                 </li>
             </ul>
@@ -28,6 +34,7 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
     import ItemView from '../components/ItemView.vue'
 
     export default {
@@ -49,12 +56,15 @@
                 this.$store.commit('SET_SEARCH', e.target.value);
             },
             follow(deputeId){
-                this.$store.dispatch(this.$store.state.auth.token ? 'FOLLOW_DEPUTE' : 'AUTH', deputeId)
+                this.$store.dispatch(this.authed ? 'FOLLOW_DEPUTE' : 'AUTH', deputeId)
                 .then(()=> this.$store.dispatch('RESET_FEED'))
                 .then(()=>{
                     this.$router.replace('feed')
                 });
             }
+        },
+        computed: {
+            ...mapGetters(['authed'])
         },
         destroyed(){
             this.$store.commit('SET_SEARCH', '');

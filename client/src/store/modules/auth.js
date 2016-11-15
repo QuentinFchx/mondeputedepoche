@@ -26,8 +26,15 @@ const actions = {
     }
 }
 
+const getters = {
+    authed(state){
+        return !!state.token
+    }
+}
+
 export default {
     state,
     mutations,
-    actions
+    actions,
+    getters
 }

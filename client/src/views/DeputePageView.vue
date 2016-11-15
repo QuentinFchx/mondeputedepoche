@@ -13,8 +13,8 @@
                 Date naissance: {{ depute.dateNaissance | date('L') }}
             </div>
 
-            <button class="mdl-button" @click="follow()" v-if="!isFollowed">Follow</button>
-            <button class="mdl-button" @click="unfollow()" v-if="isFollowed">Unfollow</button>
+            <button class="mdl-button" @click="follow()" v-if="!isFollowed">Suivre</button>
+            <button class="mdl-button" @click="unfollow()" v-if="isFollowed">Se désabonner</button>
         </div>
     </div>
 </template>
