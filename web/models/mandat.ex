@@ -41,6 +41,11 @@ defmodule An.Mandat do
       where: o.uid == ^organe.uid
   end
 
+  def active(query) do
+    from m in query,
+      where: not is_nil(m.date_fin)
+  end
+
   def filter_circonscription(query, numero_departement, numero_circonscription) do
     numero_circonscription_str = Integer.to_string(numero_circonscription)
     from m in query,

@@ -9,17 +9,20 @@ defmodule An.DeputeService do
 
   @spec get_depute_of_commune(number) :: Depute
   def get_depute_of_commune(code_postal) do
-    commune = Commune
+    commune =
+      Commune
       |> Commune.filter_code_postal(code_postal)
       |> Ecto.Query.first
       |> Repo.one!
 
-    mandat = Mandat
-    |> Mandat.in_organe(An.OrganeService.current_assemblee)
-    |> Mandat.filter_parlementaires
-    |> Mandat.filter_circonscription(commune.numero_departement, commune.numero_circonscription)
-    |> Repo.one!
-    |> Repo.preload(:depute)
+    mandat =
+      Mandat
+      |> Mandat.in_organe(An.OrganeService.current_assemblee)
+      |> Mandat.filter_parlementaires
+      |> Mandat.filter_circonscription(commune.numero_departement, commune.numero_circonscription)
+      |> Mandat.active
+      |> Repo.one!
+      |> Repo.preload(:depute)
 
     mandat.depute
   end
