@@ -19,14 +19,14 @@ defmodule An.DeputeView do
       }
     }
 
-    par_pol = An.DeputeService.get_parpol_of_depute(depute)
-    if par_pol do
-      json = Map.put(json, "partiPolitique", Phoenix.View.render(An.OrganeView, "organe.json", %{organe: par_pol}))
+    json = case An.DeputeService.get_parpol_of_depute(depute) do
+      nil -> json
+      par_pol -> Map.put(json, "partiPolitique", Phoenix.View.render(An.OrganeView, "organe.json", %{organe: par_pol}))
     end
 
-    groupe_pol = An.DeputeService.get_gp_of_depute(depute)
-    if groupe_pol do
-      json = Map.put(json, "groupePolitique", Phoenix.View.render(An.OrganeView, "organe.json", %{organe: groupe_pol}))
+    case An.DeputeService.get_gp_of_depute(depute) do
+      nil -> json
+      groupe_pol -> Map.put(json, "groupePolitique", Phoenix.View.render(An.OrganeView, "organe.json", %{organe: groupe_pol}))
     end
   end
 end
