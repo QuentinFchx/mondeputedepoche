@@ -54,6 +54,15 @@ defmodule An.DeputeService do
     Repo.all(query) |> List.first
   end
 
+  @spec get_mandat_parlementaire_of_depute(Depute) :: Mandat
+  def get_mandat_parlementaire_of_depute(depute) do
+    depute
+    |> Ecto.assoc(:mandats)
+    |> Mandat.in_organe(An.OrganeService.current_assemblee)
+    |> Mandat.active
+    |> Repo.one!
+  end
+
   @spec get_depute_picture(Depute) :: String.t
   def get_depute_picture(depute) do
     "PA" <> picture_id = depute.uid
