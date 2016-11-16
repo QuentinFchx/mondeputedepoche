@@ -34,8 +34,11 @@ defmodule An.QuestionService do
 
   def parse_question_texte(question) do
     interventions = []
-    # add_intervention(interventions, Floki.text(html_node))
     interventions
+    |> add_intervenant(question |> Repo.preload(:depute) |> Map.get(:depute))
+    |> add_content_to_last_intervention(question |> get_texte_question)
+    |> add_intervenant(nil)
+    |> add_content_to_last_intervention(question |> get_texte_reponse)
   end
 
   @spec parse_question_html(Question) :: list
@@ -49,8 +52,10 @@ defmodule An.QuestionService do
   defp get_texte_reponse(question) do
     question.raw_json
     |> Map.get("textesReponse")
-    |> Map.get("texteReponse")
-    |> Map.get("texte")
+    |> case do
+      nil -> nil
+      reponses -> reponses |> Map.get("texteReponse") |> Map.get("texte")
+    end
   end
 
   defp get_texte_question(question) do
@@ -71,8 +76,8 @@ defmodule An.QuestionService do
     case html_node do
       tuple when is_tuple(tuple) -> case elem(html_node, 0) do
         "p" -> interventions
-        "strong" -> add_intervention(interventions, Floki.text(html_node))
-        "b" -> add_intervention(interventions, Floki.text(html_node))
+        "strong" -> add_intervenant(interventions, Floki.text(html_node) |> parse_intervenant)
+        "b" -> add_intervenant(interventions, Floki.text(html_node) |> parse_intervenant)
         "i" -> add_content_to_last_intervention(interventions, Floki.text(html_node), "annotation")
         "br" -> add_content_to_last_intervention(interventions, Floki.text(html_node), "format")
         _ -> add_content_to_last_intervention(interventions, Floki.text(html_node))
@@ -81,11 +86,9 @@ defmodule An.QuestionService do
     end
   end
 
-  @spec add_intervention(list, String.t) :: list
-  defp add_intervention(interventions, intervenant) do
+  defp add_intervenant(interventions, intervenant) do
     intervention = %{
-      intervenant: parse_intervenant(intervenant),
-      # intervenant: intervenant,
+      intervenant: intervenant,
       parts: []
     }
     interventions ++ [intervention]
