@@ -61,7 +61,7 @@ export default {
     @import '../styles/vars.scss';
 
     .pour {
-        background-color: $blue;
+        background-color: $green;
     }
 
     .contre {

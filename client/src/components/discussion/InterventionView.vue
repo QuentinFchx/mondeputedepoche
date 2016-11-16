@@ -55,7 +55,7 @@ export default {
 
         &:not(.other) {
             > p {
-                background: $glowy-blue;
+                background: $blue;
                 color: white;
 
                 &:first-child {

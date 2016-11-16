@@ -2,12 +2,13 @@
 $ff-blue: #051440;
 $ff-red: #EC1920;
 
-$blue2: #2A375C;
-$blue: #505A79;
+$blue: #6788ea;
+$light-blue: #68bcf7;
 $white: #FFFFFF;
 $red: $ff-red;
 $light-gray: #efeff4;
 $gray: #a6a6a6;
+$green: #55b678;
 
 // Glowy background
-$glowy-blue: linear-gradient(90deg, #6788ea, #68bcf7)
+$glowy-blue: linear-gradient(90deg, $blue, $light-blue)

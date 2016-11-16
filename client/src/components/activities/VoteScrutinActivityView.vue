@@ -28,7 +28,7 @@ export default {
     }
 
     .pour, .adopté {
-        color: $blue;
+        color: $green;
     }
 
     .contre, .rejeté {
