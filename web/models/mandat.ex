@@ -43,7 +43,7 @@ defmodule An.Mandat do
 
   def active(query) do
     from m in query,
-      where: not is_nil(m.date_fin)
+      where: is_nil(m.date_fin)
   end
 
   def filter_circonscription(query, numero_departement, numero_circonscription) do
