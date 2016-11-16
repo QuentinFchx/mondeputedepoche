@@ -37,7 +37,7 @@ export default {
             width: 100%;
             height: 100%;
             content: '';
-            background: $glowy-bg;
+            background: $glowy-blue;
             opacity: .98;
             z-index: -1;
         }

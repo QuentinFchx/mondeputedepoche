@@ -40,7 +40,6 @@ export default {
         display: flex;
         flex-direction: column;
         padding-right: 30px;
-        font-family: 'Abhaya Libre', serif;
 
         &.other {
             align-items: flex-end;
@@ -56,7 +55,7 @@ export default {
 
         &:not(.other) {
             > p {
-                background-color: $blue;
+                background: $glowy-blue;
                 color: white;
 
                 &:first-child {
@@ -66,12 +65,13 @@ export default {
         }
 
         > p {
-            max-width: 80%;
             margin-top: 0;
             margin-bottom: 2px;
+            max-width: 80%;
             padding: 8px;
-            $radius: 10px;
+            font-weight: lighter;
 
+            $radius: 10px;
             &:first-child {
                 border-top-left-radius: $radius;
                 border-top-right-radius: $radius;
