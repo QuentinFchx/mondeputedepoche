@@ -16,6 +16,13 @@ defmodule An.FeedController do
     json(conn, %{data: activities})
   end
 
+  def depute_feed(conn, %{"depute_id" => depute_uid}) do
+    depute = Repo.get(An.Depute, depute_uid)
+    activities = An.Feed.get_activity_of_depute(depute)
+
+    json(conn, %{data: activities})
+  end
+
   def activity(conn, %{"actor_id" => actor_id, "object_id" => object_id}) do
     actor =
       An.Depute
