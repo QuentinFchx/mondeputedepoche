@@ -10,6 +10,15 @@ defmodule An.FollowService do
     |> Repo.insert!
   end
 
+  def follow?(citoyen, depute) do
+    CitoyenFollow
+    |> Repo.get_by(%{citoyen_uid: citoyen.id, depute_uid: depute.uid})
+    |> case do
+      nil -> false
+      _ -> true
+    end
+  end
+
   @spec unfollow(Citoyen, Depute) :: none
   def unfollow(citoyen, depute) do
     CitoyenFollow

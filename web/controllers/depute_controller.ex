@@ -3,23 +3,32 @@ defmodule An.DeputeController do
 
   alias An.Depute
 
-  def index(conn, _params) do
-    deputes = Repo.all(Depute)
-    render(conn, "index.json", deputes: deputes)
-  end
-
   def show(conn, %{"id" => id}) do
-    depute = Repo.get!(Depute, id)
+    citoyen = Map.get(conn.assigns, :citoyen)
+
+    depute =
+      Repo.get!(Depute, id)
+      |> set_followed(citoyen)
+
     render(conn, "show.json", depute: depute)
   end
 
   def search(conn, %{"query" => query}) do
+    citoyen = Map.get(conn.assigns, :citoyen)
+
     deputes =
       case Integer.parse(query) do
         {code_postal, _} -> [An.DeputeService.get_depute_of_commune(code_postal)]
         :error -> An.DeputeService.search(query)
       end
+      |> Enum.map(&(set_followed(&1, citoyen)))
 
     render(conn, "index.json", deputes: deputes)
   end
+
+  defp set_followed(depute, nil), do: Map.put(depute, :followed, false)
+  defp set_followed(depute, citoyen) do
+    Map.put(depute, :followed, An.FollowService.follow?(citoyen, depute))
+  end
+
 end

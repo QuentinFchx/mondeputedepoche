@@ -16,7 +16,8 @@ defmodule An.DeputeView do
       dateNaissance: depute.date_naissance,
       image: %{
         url: An.DeputeService.get_depute_picture(depute)
-      }
+      },
+      followed: Map.get(depute, :followed, false)
     }
 
     json = case An.DeputeService.get_parpol_of_depute(depute) do

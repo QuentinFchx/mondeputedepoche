@@ -32,7 +32,7 @@ defmodule An.Router do
   scope "/api", An do
     pipe_through :api
 
-    resources "/deputes", DeputeController, only: [:index, :show] do
+    resources "/deputes", DeputeController, only: [:show] do
       get "/feed", FeedController, :depute_feed
     end
 
