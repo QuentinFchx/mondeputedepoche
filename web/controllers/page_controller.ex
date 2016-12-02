@@ -4,8 +4,4 @@ defmodule An.PageController do
   def index(conn, _params) do
     render conn, "index.html"
   end
-
-  def an(conn, _params) do
-    render conn, "an.html"
-  end
 end

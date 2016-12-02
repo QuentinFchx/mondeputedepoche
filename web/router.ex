@@ -25,7 +25,6 @@ defmodule An.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    get "/an/*path", PageController, :an
   end
 
   # Other scopes may use custom stacks.
