@@ -10,11 +10,24 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
 import AppHeader from './components/AppHeader.vue'
 
 export default {
     components: {
         AppHeader
+    },
+    created(){
+        Vue.http.interceptors.push((request, next) => {
+            next(response => {
+                if(response.status === 401){
+                    window.localStorage.clear()
+                    this.$store.dispatch('LOG_OUT')
+                    this.$router.replace('search')
+                }
+            });
+        });
     }
 };
 </script>

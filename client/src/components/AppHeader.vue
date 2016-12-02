@@ -15,7 +15,7 @@
 export default {
     methods: {
         logout(){
-            this.$store.dispatch('LOG_OUT');
+            this.$store.dispatch('LOG_OUT')
             this.$router.replace('search')
         }
     }
