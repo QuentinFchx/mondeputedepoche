@@ -1,7 +1,12 @@
 <template lang="html">
     <div class="intervention">
-        <img :src="intervention.intervenant.image.url" alt="" v-if="!this.fromPov && intervention.intervenant">
-        <img src="../../assets/icon.png" v-if="!this.fromPov && !intervention.intervenant">
+        <div class="intervenant" v-if="!fromPov">
+            <span v-if="intervention.intervenant">{{ intervention.intervenant.displayName }}</span>
+            <img :src="intervention.intervenant.image.url"
+                 :alt="intervention.intervenant.displayName"
+                 v-if="intervention.intervenant">
+            <img src="../../assets/icon.png" v-if="!intervention.intervenant">
+        </div>
         <div class="content" :class="{ other: !this.fromPov }">
             <p v-for="part in filteredInterventions">{{ part.content }}</p>
         </div>
@@ -22,11 +27,12 @@ export default {
 <style lang="scss" scoped>
     @import '../../styles/vars.scss';
 
-    .intervention {
-        position: relative;
-        margin-bottom: 5px;
+    .intervenant {
+        text-align: right;
+        font-size: smaller;
 
         img {
+            display: block;
             position: absolute;
             right: 0;
             width: 20px;
@@ -34,6 +40,11 @@ export default {
             border-radius: 50%;
             object-fit: cover;
         }
+    }
+
+    .intervention {
+        position: relative;
+        margin-bottom: 5px;
     }
 
     .content {
