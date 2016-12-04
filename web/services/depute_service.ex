@@ -34,10 +34,10 @@ defmodule An.DeputeService do
         join: m in Mandat,
         on: m.depute_uid == ^depute.uid and is_nil(m.date_fin),
         where: o.uid == m.organe_uid,
-        where: o.code_type == ^"PARPOL",
-        distinct: true
+        where: o.code_type == ^"PARPOL"
 
-    Repo.one(query)
+    # FIXME: depute can have several PARPOL
+    Repo.all(query) |> List.first
   end
 
   @spec get_gp_of_depute(Depute) :: Organe
@@ -47,8 +47,7 @@ defmodule An.DeputeService do
         join: m in Mandat,
         on: m.depute_uid == ^depute.uid and is_nil(m.date_fin),
         where: o.uid == m.organe_uid,
-        where: o.code_type == ^"GP",
-        distinct: true
+        where: o.code_type == ^"GP"
 
     # FIXME: find a way to use Repo.one (fix data)
     Repo.all(query) |> List.first
