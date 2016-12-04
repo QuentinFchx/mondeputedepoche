@@ -4,6 +4,8 @@ defmodule An.Router do
   use Plug.ErrorHandler
   use Sentry.Plug
 
+  @lazy_auth %{lazy_auth: true}
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -17,7 +19,6 @@ defmodule An.Router do
   end
 
   pipeline :auth do
-    plug Joken.Plug, verify: &An.AuthService.verify/0
     plug An.AuthCitoyen
   end
 
@@ -31,12 +32,12 @@ defmodule An.Router do
   scope "/api", An do
     pipe_through :api
 
+    post "/auth", AuthController, :auth
+
     resources "/deputes", DeputeController, only: [:show] do
       get "/feed", FeedController, :depute_feed
     end
 
-    get "/search", DeputeController, :search
-    post "/auth", AuthController, :auth
     get "/activity/:actor_id/:object_id", FeedController, :activity
   end
 
@@ -44,6 +45,7 @@ defmodule An.Router do
     pipe_through :api
     pipe_through :auth
 
+    get "/search", DeputeController, :search, private: @lazy_auth
     get "/feed", FeedController, :feed
 
     get "/followed", FollowController, :followed
