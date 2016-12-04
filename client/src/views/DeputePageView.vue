@@ -13,8 +13,8 @@
                 Date naissance: {{ depute.dateNaissance | date('L') }}
             </div>
 
-            <button class="mdl-button" @click="follow()" v-if="!isFollowed">Suivre</button>
-            <button class="mdl-button" @click="unfollow()" v-if="isFollowed">Se désabonner</button>
+            <button class="mdl-button" @click="follow()" v-if="!depute.followed">Suivre</button>
+            <button class="mdl-button" @click="unfollow()" v-if="depute.followed">Se désabonner</button>
         </div>
     </div>
 </template>
@@ -28,12 +28,6 @@ export default {
     },
     created(){
         this.fetchDepute()
-        this.$store.dispatch('FETCH_FOLLOWED')
-    },
-    computed: {
-        isFollowed(){
-            return this.$store.state.deputes.followed.some(d => d.id === this.depute.id)
-        }
     },
     methods: {
         fetchDepute(){

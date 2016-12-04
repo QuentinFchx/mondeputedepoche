@@ -25,7 +25,8 @@
                     <item-view>
                         <img slot="picture" :src="depute.image.url" :alt="depute.displayName" class="mdl-list__item-avatar">
                         <span slot="line">{{depute.displayName}}</span>
-                        <button class="mdl-button" v-on:click="follow(depute.id)">Suivre</button>
+                        <button class="mdl-button" @click="follow(depute.id)" v-if="!depute.followed">Suivre</button>
+                        <button class="mdl-button" disabled v-if="depute.followed">Suivi</button>
                     </item-view>
                 </li>
             </ul>

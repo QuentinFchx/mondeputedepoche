@@ -34,10 +34,6 @@ defmodule An.Router do
 
     post "/auth", AuthController, :auth
 
-    resources "/deputes", DeputeController, only: [:show] do
-      get "/feed", FeedController, :depute_feed
-    end
-
     get "/activity/:actor_id/:object_id", FeedController, :activity
   end
 
@@ -47,6 +43,10 @@ defmodule An.Router do
 
     get "/search", DeputeController, :search, private: @lazy_auth
     get "/feed", FeedController, :feed
+
+    resources "/deputes", DeputeController, only: [:show], private: @lazy_auth do
+      get "/feed", FeedController, :depute_feed
+    end
 
     get "/followed", FollowController, :followed
     post "/follow/:id", FollowController, :follow
