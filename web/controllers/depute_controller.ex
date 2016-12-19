@@ -16,10 +16,14 @@ defmodule An.DeputeController do
   def search(conn, %{"query" => query}) do
     citoyen = Map.get(conn.assigns, :citoyen)
 
+    sanitized_query = String.trim(query)
+
     deputes =
-      case Integer.parse(query) do
+      sanitized_query
+      |> Integer.parse
+      |> case do
         {code_postal, _} -> [An.DeputeService.get_depute_of_commune(code_postal)]
-        :error -> An.DeputeService.search(query)
+        :error -> An.DeputeService.search(sanitized_query)
       end
       |> Enum.map(&(set_followed(&1, citoyen)))
 
