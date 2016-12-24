@@ -37,8 +37,11 @@ defmodule An.Fetcher.AmendementsLoader do
   defp amendement_from_data(amendement_data) do
     signataires = amendement_data |> Map.get("signataires")
     auteur = signataires |> Map.get("auteur")
+    # FIXME: handle co-signataires
     cosignataires = signataires |> Map.get("cosignataires")
-    date_depot = amendement_data
+
+    date_depot =
+      amendement_data
       |> Map.get("dateDepot")
       |> An.Fetcher.AbstractLoader.parse_date
 

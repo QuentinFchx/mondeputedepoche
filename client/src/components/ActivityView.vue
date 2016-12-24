@@ -11,13 +11,15 @@
 import ActivityHeaderView from './activities/ActivityHeaderView.vue'
 import VoteScrutinActivityView from './activities/VoteScrutinActivityView.vue'
 import PoseQuestionActivityView from './activities/PoseQuestionActivityView.vue'
+import DeposeAmendementActivityView from './activities/DeposeAmendementActivityView.vue'
 
 export default {
     props: ['activity'],
     components: {
         ActivityHeaderView,
         vote_scrutin: VoteScrutinActivityView,
-        pose_question: PoseQuestionActivityView
+        pose_question: PoseQuestionActivityView,
+        depose_amendement: DeposeAmendementActivityView
     }
 };
 </script>

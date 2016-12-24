@@ -34,6 +34,7 @@ defmodule An.FeedController do
       |> case do
         "VTANR" -> An.Scrutin
         "QANR" -> An.Question
+        "AMANR" -> An.Amendement
       end
       |> Repo.get(object_id)
 
@@ -42,6 +43,7 @@ defmodule An.FeedController do
       |> case do
         %An.Question{} -> An.Feed.DeputePoseQuestion.activity_for_depute_question(actor, object)
         %An.Scrutin{} -> An.Feed.DeputeVoteScrutin.activity_for_depute_scrutin(actor, object)
+        %An.Amendement{} -> An.Feed.DeputeDeposeAmendement.activity_for_depute_amendement(actor, object)
       end
 
     json(conn, %{data: activity})

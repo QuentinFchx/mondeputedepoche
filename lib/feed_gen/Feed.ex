@@ -4,6 +4,7 @@ defmodule An.Feed do
 
   alias An.Feed.DeputePoseQuestion
   alias An.Feed.DeputeVoteScrutin
+  alias An.Feed.DeputeDeposeAmendement
 
   @mailbox_size 20
 
@@ -23,9 +24,12 @@ defmodule An.Feed do
   end
 
   def get_activity_of_depute(depute, before \\ DateTime.utc_now()) do
+    args = [depute, before, @mailbox_size]
+
     [
-      Task.async(DeputePoseQuestion, :get_depute_questions, [depute, before, @mailbox_size]),
-      Task.async(DeputeVoteScrutin, :get_depute_votes, [depute, before, @mailbox_size])
+      Task.async(DeputePoseQuestion, :get_depute_questions, args),
+      Task.async(DeputeVoteScrutin, :get_depute_votes, args),
+      Task.async(DeputeDeposeAmendement, :get_depute_amendements, args)
     ]
     |> Enum.map(&Task.await(&1))
     |> List.flatten

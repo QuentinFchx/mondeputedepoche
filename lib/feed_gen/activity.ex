@@ -64,10 +64,39 @@ defmodule An.Activity do
     }
   end
 
+  def representation_to_object(representation) do
+    %{
+      objectType: "representation",
+      url: An.RepresentationService.get_link_of_representation(representation)
+    }
+  end
+
   @spec amendement_to_object(An.Amendement) :: struct
   def amendement_to_object(amendement) do
+    representation =
+      amendement.raw_json
+      |> Map.get("representations")
+      |> Map.get("representation")
+
+    # FIXME: sort might be nil
+    sort =
+      amendement.raw_json
+      |> Map.get("sort")
+      |> case do
+        nil -> nil
+        sort -> Map.get(sort, "sortEnSeance")
+      end
+
     %{
-      id: amendement.uid
+      id: amendement.uid,
+      objectType: "amendement",
+      sort: sort,
+      corps: %{
+        dispositif: amendement.raw_json |> Map.get("corps") |> Map.get("dispositif")
+      },
+      attachments: [
+        representation_to_object(representation)
+      ]
     }
   end
 end
