@@ -25,7 +25,8 @@ config :logger, :console,
 config :sentry,
   dsn: "https://fb79ff8316e044ae8ed5426f05e2fb70:07ac66908f4b455b83a6c67574f1a9ec@sentry.io/109076",
   included_environments: [:prod],
-  environment_name: Mix.env
+  environment_name: Mix.env,
+  use_error_logger: true
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
