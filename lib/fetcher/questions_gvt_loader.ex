@@ -22,7 +22,8 @@ defmodule An.Fetcher.QuestionsGvtLoader do
   def handle_question(question_data) do
     question = question_from_data(question_data)
 
-    if Repo.get(Depute, question.depute_uid) do
+    # FIXME: why published_at can be nil ?
+    if Repo.get(Depute, question.depute_uid) && question.published_at != nil do
       case Repo.get(Question, question.uid) do
         nil -> Repo.insert!(question)
         question -> question
