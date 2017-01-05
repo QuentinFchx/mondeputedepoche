@@ -45,7 +45,7 @@ defmodule An.Mixfile do
      {:redix, "~> 0.4.0"},
      {:timex, "~> 3.0"},
      {:csv, "~> 1.4.2"},
-     {:floki, "~> 0.11.0"},
+     {:floki, "~> 0.12.0"},
      {:joken, "~> 1.3"},
      {:corsica, "~> 0.4"},
      {:sentry, "~> 2.0"},
